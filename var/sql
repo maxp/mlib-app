@@ -1,0 +1,6 @@
+#!/bin/bash
+
+PGPASSWORD=1 psql -h localhost -U username database $*
+
+
+#.

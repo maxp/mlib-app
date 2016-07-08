@@ -1,0 +1,17 @@
+#!/bin/bash
+
+PROD_HOST="www@_PRJ_"
+PROD_PATH="/www/_PRJ_"
+
+PROD_ROOT=$PROD_HOST:$PROD_PATH
+
+UBERJAR="tmp/target/_PRJ_.jar"
+
+ssh $PROD_HOST mkdir -p $PROD_PATH/var
+
+chmod u+w $UBERJAR
+scp $USERJAR $PROD_ROOT
+
+ssh $PROD_HOST $PROD_PATH/stop
+
+#.
