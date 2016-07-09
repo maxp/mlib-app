@@ -22,7 +22,7 @@
   '[
     [org.clojure/clojure "1.8.0"]
     [org.clojure/tools.namespace "0.2.11" :scope "test"]
-    [com.taoensso/timbre "4.4.0"]   ; https://github.com/ptaoussanis/timbre
+    [com.taoensso/timbre "4.5.1"]   ; https://github.com/ptaoussanis/timbre
     ; [org.clojure/core.cache "0.6.4"]
 
     [clj-time "0.12.0"]
@@ -40,10 +40,10 @@
     [hiccup "1.0.5"]
     [mount "0.1.10"]
 
-    [org.clojure/java.jdbc "0.5.8"]
+    [org.clojure/java.jdbc "0.6.1"]
     [org.postgresql/postgresql "9.4.1208"]
     [com.mchange/c3p0 "0.9.5.2"]
-    [honeysql "0.6.3"]])  ; https://github.com/jkk/honeysql
+    [honeysql "0.7.0"]])  ; https://github.com/jkk/honeysql
 ;
 
 (task-options!
