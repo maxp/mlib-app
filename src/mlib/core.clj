@@ -10,7 +10,7 @@
     [cheshire.core :as json]
     [cheshire.generate :refer [add-encoder]])
   (:import
-    java.security.MessageDigest))
+    [java.security MessageDigest]))
 ;
 
 
@@ -137,11 +137,20 @@
 (defn calc-hash
   "calculate hash byte array of utf string using hash-function"
   [hash-name s]
-  (doto
-    (MessageDigest/getInstance hash-name)
-    (.update (.getBytes s "UTF-8"))
-    (.digest)))
+  (let [md (MessageDigest/getInstance hash-name)]
+    (.update md (.getBytes s "UTF-8"))
+    (.digest md)))
 ;
+
+(defn ^String md5
+  "returns md5 lowercase string calculated on utf-8 bytes of input"
+  [^String s]
+  (apply str (map hexbyte (calc-hash "MD5" s))))
+
+(defn ^String sha1
+  "returns sha1 lowercase string calculated on utf-8 bytes of input"
+  [^String s]
+  (apply str (map hexbyte (calc-hash "SHA-1" s))))
 
 (defn ^String sha256
   "returns sha256 lowercase string calculated on utf-8 bytes of input"

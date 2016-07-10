@@ -3,8 +3,7 @@
   (:require
     [taoensso.timbre :refer [debug info warn]]
     [clj-http.client :as http]
-    [mlib.conf :refer [conf]]
-    [mlib.core :refer [try-warn]]))
+    [mlib.conf :refer [conf]]))
 ;
 
 
@@ -47,7 +46,7 @@
   "params should be stringable (json/generate-string)
     or File/InputStream/byte-array"
   [token method mpart & [{timeout :timeout}]]
-  (try-warn "send-file:"
+  (try
     (let [tout (or timeout socket-timeout)
           res (:body
                 (http/post (api-url token method)
@@ -60,7 +59,9 @@
           ;
       (if (:ok res)
         (:result res)
-        (info "send-file:" method res)))))
+        (info "send-file:" method res)))
+    (catch Exception e
+      (warn "send-file:" method e))))
 ;
 
 
