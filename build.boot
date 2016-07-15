@@ -59,13 +59,11 @@
   '[boot.git :refer [last-commit]]
   '[mount.core :as mount])
 
-(require dev-main)
-
-
 ;;;;;;;;;
 
 
 (defn start []
+  (require dev-main)
   (let [rc (edn/read-string (slurp "var/dev.edn"))]
     (mount/start-with-args rc)))
 ;
@@ -85,9 +83,15 @@
     (spit bf (.toString (merge project bld)))))
 ;
 
+(deftask dev []
+  (comp
+    (javac)
+    (repl)))
+
 (deftask build []
   (increment-build)
   (comp
+    (javac)
     (aot)
     (uber)
     (jar :main jar-main :file jar-file)
