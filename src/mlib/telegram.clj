@@ -1,7 +1,7 @@
 
 (ns mlib.telegram
   (:require
-    [taoensso.timbre :refer [debug info warn]]
+    [taoensso.timbre :refer [info warn]]
     [clj-http.client :as http]
     [mlib.conf :refer [conf]]))
 ;
@@ -36,6 +36,17 @@
     (merge {:chat_id chat :text text}
       (when markdown? [:parse_mode "Markdown"]))))
 ;
+
+(defn send-md [token chat text]
+  (api token :sendMessage
+    {:chat_id chat :text text :parse_mode "Markdown"}))
+;
+
+(defn send-html [token chat text]
+  (api token :sendMessage 
+    {:chat_id chat :text text :parse_mode "HTML"}))
+;
+
 
 
 (defn send-message [token chat params]
