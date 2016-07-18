@@ -1,4 +1,4 @@
 
-# mlib application template - 0.7.0
+# mlib application template - 0.8.0
 
 Just remove unnecessary files :)

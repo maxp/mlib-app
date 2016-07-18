@@ -22,7 +22,7 @@
   '[
     [org.clojure/clojure "1.8.0"]
     [org.clojure/tools.namespace "0.2.11" :scope "test"]
-    [com.taoensso/timbre "4.5.1"]   ; https://github.com/ptaoussanis/timbre
+    [com.taoensso/timbre "4.6.0"]   ; https://github.com/ptaoussanis/timbre
     ; [org.clojure/core.cache "0.6.4"]
 
     [clj-time "0.12.0"]
@@ -35,7 +35,7 @@
     [ring/ring-headers "0.2.0"]
     [ring/ring-jetty-adapter "1.5.0"]
 
-    [cheshire "5.6.2"]
+    [cheshire "5.6.3"]
     [compojure "1.5.1"]
     [hiccup "1.0.5"]
     [mount "0.1.10"]
