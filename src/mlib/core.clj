@@ -66,7 +66,7 @@
 ;
 
 (defn urand32 []
-  (reduce #(+ (* 256 %1) (bit-and 255 %2))) 0 (urand-bytes 4))
+  (reduce #(+ (* 256 %1) (bit-and 255 %2)) 0 (urand-bytes 4)))
 ;
 
 
