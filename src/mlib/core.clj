@@ -105,7 +105,7 @@
 (defn ^String str-head
   "Returns the first n characters of s."
   [n ^String s]
-  (if (> (count s) n) s (.substring s (- 0 n))))
+  (if (>= n (.length s)) s (.substring s 0 n)))
 ;
 
 (defn ^String str-tail
