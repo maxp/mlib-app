@@ -1,5 +1,5 @@
 #!/bin/bash
 
-kill $(cat var/PID)
+kill $(cat .pid)
 
 #.

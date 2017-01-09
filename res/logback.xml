@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+<!--
+      <pattern>%d [%thread] %level{-5} %logger{24} - %msg%n</pattern>
+-->
+      <pattern>%d{yy-MM-dd HH:mm:ss} %level{-5} [%c{30}] - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="org.eclipse.jetty" level="INFO" />
+  <logger name="org.mongodb" level="INFO" />
+
+  <root level="debug">
+    <appender-ref ref="STDOUT" />
+  </root>
+</configuration>
+
+
+<!--
+<configuration  scan="true" scanPeriod="30 seconds" >
+  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <layout class="ch.qos.logback.classic.PatternLayout">
+      <Pattern>%d [%thread] %level %logger - %m%n</Pattern>
+    </layout>
+  </appender>
+  <root level="${root-level:-INFO}">
+    <appender-ref ref="CONSOLE"/>
+  </root>
+</configuration>
+-->
+
+<!--
+<configuration debug="false">
+ <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %-10contextName %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+    <file>test.log</file>
+    <append>true</append>
+    <encoder>
+      <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="clojure-example-logback-integration" level="DEBUG"/>
+
+  <root level="INFO">
+    <appender-ref ref="CONSOLE"/>
+    <appender-ref ref="FILE"/>
+  </root>
+</configuration>
+-->
+
+<!--
+(import ch.qos.logback.classic.Logger)
+(import ch.qos.logback.classic.Level)
+(.setLevel
+   (org.slf4j.LoggerFactory/getLogger (Logger/ROOT_LOGGER_NAME)) Level/ALL)
+-->

@@ -1,9 +1,8 @@
 
-(ns mlib.telegram
+(ns mlib.tlg.core
   (:require
     [taoensso.timbre :refer [info warn]]
-    [clj-http.client :as http]
-    [mlib.conf :refer [conf]]))
+    [clj-http.client :as http]))
 ;
 
 
@@ -43,7 +42,7 @@
 ;
 
 (defn send-html [token chat text]
-  (api token :sendMessage 
+  (api token :sendMessage
     {:chat_id chat :text text :parse_mode "HTML"}))
 ;
 
