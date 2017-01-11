@@ -28,17 +28,17 @@
 
     ; [javax.servlet/servlet-api "2.5"]
     ; [http-kit "2.1.19"]
-    [ring/ring-core "1.5.0"]
+    [ring/ring-core "1.5.1"]
     [ring/ring-json "0.4.0"]
     [ring/ring-headers "0.2.0"]
-    [ring/ring-jetty-adapter "1.5.0"]
+    [ring/ring-jetty-adapter "1.5.1"]
 
     [cheshire "5.6.3"]
-    [compojure "1.5.1"]
+    [compojure "1.5.2"]
     [hiccup "1.0.5"]
-    [mount "0.1.11"]
-
     [rum "0.10.7"]
+    
+    [mount "0.1.11"]
 
     ;;
     [org.clojure/java.jdbc "0.6.1"]
