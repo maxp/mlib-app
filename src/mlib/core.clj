@@ -1,5 +1,5 @@
 ;;
-;;  mlib: 0.6.0
+;;  mlib: 0.7.0
 ;;
 
 (ns mlib.core
@@ -134,6 +134,14 @@
     (.substring (Integer/toString (+ 0x100 (bit-and 0xff b)) 16) 1))
 ;
 
+(defn byte-array-hash
+  "calculate hash of byte array"
+  [hash-name barray]
+  (let [md (MessageDigest/getInstance hash-name)]
+    (.update md barray)
+    (.digest md)))
+;
+
 (defn calc-hash
   "calculate hash byte array of utf string using hash-function"
   [hash-name s]
@@ -175,6 +183,15 @@
   (let [maps (filter identity maps)]
     (assert (every? map? maps))
     (apply merge-with deep-merge* maps)))
+;
+
+
+;;;;;; try macro ;;;;;;
+
+(defmacro try-warn [label & body]
+  `(try ~@body
+    (catch Exception e#
+      (~'warn ~label e#))))
 ;
 
 ;;.

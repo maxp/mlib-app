@@ -40,11 +40,6 @@
     
     [mount "0.1.11"]
 
-    ;;
-    [org.clojure/java.jdbc "0.6.1"]
-    [org.postgresql/postgresql "9.4.1212"]
-    ;  [com.mchange/c3p0 "0.9.5.2"]
-    [honeysql "0.8.2"]    ; https://github.com/jkk/honeysql
 
     [com.novemberain/monger "3.1.0"]
 
@@ -52,8 +47,11 @@
 
     ;; https://funcool.github.io/clojure.jdbc/latest/
     ; [funcool/clojure.jdbc "0.9.0"]
-    ;; https://github.com/tomekw/hikari-cp
-    ; [hikari-cp "1.7.5"]
+    ; [hikari-cp "1.7.5"]   ; https://github.com/tomekw/hikari-cp
+    [honeysql "0.8.2"]    ; https://github.com/jkk/honeysql
+
+    ;; [org.clojure/java.jdbc "0.6.1"]
+    ;; [com.mchange/c3p0 "0.9.5.2"]
 
     ; [com.draines/postal "2.0.2"]
 
