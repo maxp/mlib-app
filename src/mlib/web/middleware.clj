@@ -1,6 +1,7 @@
 
 (ns mlib.web.middleware
   (:require
+    [clojure.string :refer [starts-with?]]
     [ring.util.response :refer [get-header set-cookie]]
     [ring.middleware.json :refer [wrap-json-params]]
     [ring.middleware.keyword-params :refer [wrap-keyword-params]]
@@ -20,12 +21,14 @@
 ;
 
 (defn wrap-csrf
-  [handler & [{skip-uris :skip-uris}]]
+  [handler & [{ignore-prefixes :ignore-prefixes}]]
   (fn [req]
     (let [{:keys [method uri sess headers]} req
           sess_csrf (:_csrf sess)]
-      (if (and sess_csrf (= method :post)
-            (not (contains? skip-uris uri))
+      (if (and
+            sess_csrf
+            (= method :post)
+            (not (some #(starts-with? uri %) ignore-prefixes))
             (not= sess_csrf (:x-csrf-token headers)))
         {:status 403 :headers {} :body "CSRF token mismatch"}
         ;;

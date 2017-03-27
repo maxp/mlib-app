@@ -1,8 +1,6 @@
 
 (ns mlib.mdb.conn
   (:require
-    ;[taoensso.timbre :refer [warn]]
-    ;[clj-time.core :as t]
     [mount.core :refer [defstate]]
     [monger.json]
     [monger.joda-time]
@@ -30,7 +28,7 @@
 
 (defstate mdb
   :start
-    (connect (-> conf :mdb :angara))
+    (connect (-> conf :mdb))
   :stop
     (disconnect mdb))
 ;

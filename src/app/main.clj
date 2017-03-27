@@ -2,17 +2,17 @@
 (ns app.main
   (:gen-class)
   (:require
-    [taoensso.timbre :refer [error info]]
     [mount.core :refer [start-with-args]]
     [mlib.conf :refer [conf]]
     [mlib.core :refer [edn-read]]
+    [mlib.log :refer [info warn]]
     [app.srv]))
 ;
 
 (defn -main [& args]
   (if-let [rc (edn-read (first args))]
     (start-with-args rc)
-    (error "config profile must be in parameters!")))
+    (warn "config profile must be in parameters!")))
   ;
 
 ;;.

@@ -1,5 +1,5 @@
 ;;
-;;  mlib: 0.7.0
+;;  mlib
 ;;
 
 (ns mlib.core
@@ -85,15 +85,22 @@
 
 (defn email?
   [^String s]
-  (and s (<= (count s) 80)
-    (re-matches #"(?i)([0-9a-z\.\-\_]+)@([0-9a-z\-]+\.)+([a-z]){2,}" s)))
+  (and
+    (string? s)
+    (<= (.length s) 80)
+    (re-matches #"(?i)([0-9a-z\_\.\-\+]+)@([0-9a-z\-]+\.)+([a-z]){2,}" s)
+    s))
 ;
 
 (defn phone?
   "matches only +7 phones!"
   [^String phone]
-  (and phone (re-matches #"\+7\d{10}" phone)))
+  (and
+    (string? phone)
+    (re-matches #"\+7\d{10}" phone)
+    phone))
 ;
+
 
 
 ;; -- string utils --
@@ -119,6 +126,13 @@
   [text]
   (s/escape (str text)
     {\& "&amp;" \< "&lt;" \> "&gt;" \" "&quot;" \' "&apos;"}))
+;
+
+(defn cap-first [s]
+  (when (string? s)
+    (if (> (.length s) 0)
+      (str (Character/toUpperCase (.charAt s 0)) (.substring s 1))
+      s)))
 ;
 
 
@@ -185,13 +199,5 @@
     (apply merge-with deep-merge* maps)))
 ;
 
-
-;;;;;; try macro ;;;;;;
-
-(defmacro try-warn [label & body]
-  `(try ~@body
-    (catch Exception e#
-      (~'warn ~label e#))))
-;
 
 ;;.

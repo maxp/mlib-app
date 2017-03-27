@@ -2,7 +2,7 @@
 (ns mlib.tlg.poller
   (:require
     [clojure.core.async :refer [>!! chan]]
-    [taoensso.timbre :refer [debug info warn]]
+    [mlib.log :refer [debug info warn]]
     [mlib.core :refer [to-int]]
     [mlib.tlg.core :refer [api]]))
 ;

@@ -4,13 +4,18 @@
     <encoder>
 <!--
       <pattern>%d [%thread] %level{-5} %logger{24} - %msg%n</pattern>
--->
       <pattern>%d{yy-MM-dd HH:mm:ss} %level{-5} [%c{30}] - %msg%n</pattern>
+-->
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %level %logger{16} %msg%n</pattern>
+    </encoder>
+  </appender>
+
     </encoder>
   </appender>
 
   <logger name="org.eclipse.jetty" level="INFO" />
   <logger name="org.mongodb" level="INFO" />
+  <logger name="mlib" level="DEBUG" />
 
   <root level="debug">
     <appender-ref ref="STDOUT" />

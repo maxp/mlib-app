@@ -19,9 +19,9 @@
     [org.clojure/clojure "1.8.0"]
     ; [org.clojure/core.cache "0.6.4"]
 
-    [com.taoensso/timbre "4.8.0"]   ; https://github.com/ptaoussanis/timbre
+    ; [com.taoensso/timbre "4.8.0"]   ; https://github.com/ptaoussanis/timbre
     [org.clojure/tools.logging "0.3.1"]
-    [ch.qos.logback/logback-classic "1.1.8"]
+    [ch.qos.logback/logback-classic "1.2.2"]
 
     [clj-time "0.13.0"]
     [clj-http "3.4.1"]
@@ -33,10 +33,10 @@
     [ring/ring-headers "0.2.0"]
     [ring/ring-jetty-adapter "1.5.1"]
 
-    [cheshire "5.6.3"]
+    [cheshire "5.7.0"]
     [compojure "1.5.2"]
     [hiccup "1.0.5"]
-    [rum "0.10.7"]
+    [rum "0.10.8"]
     
     [mount "0.1.11"]
 

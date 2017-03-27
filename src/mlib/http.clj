@@ -21,10 +21,36 @@
     :body    (str body)})
 ;
 
-(defn json-resp [body]
-  { :status  200
-    :headers {"Content-Type" "application/json;charset=utf-8"}
-    :body    (generate-string body)})
+(defn json-resp
+  ( [body]
+    { :status  200
+      :headers {"Content-Type" "application/json;charset=utf-8"}
+      :body    (generate-string body)})
+  ( [status body]
+    { :status  status
+      :headers {"Content-Type" "application/json;charset=utf-8"}
+      :body    (generate-string body)}))
+;
+
+; 400 Bad Request
+; 402 Payment Required
+; 401 Unauthorized
+; 403 Forbidden
+; 404 Not Found
+; 405 Method Not Allowed
+; 429 Too Many Requests
+;
+; 500 Internal Server Error
+; 501 Not Implemented
+; 502 Bad Gateway
+; 503 Service Unavailable
+
+(defn json-err [body]
+  (json-resp 400 body))
+;
+
+(defn json-syserr [body]
+  (json-resp 500 body))
 ;
 
 (defn json-request?

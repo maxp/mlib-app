@@ -2,9 +2,7 @@
 #	generic .gitignore
 #
 
-# clojure
 /tmp/
-/var/
 
 .*
 
@@ -18,5 +16,7 @@
 *.log
 *.tmp
 *.swp
+
+!.gitignore
 
 #.

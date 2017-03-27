@@ -1,19 +1,9 @@
 
 (ns mlib.mdb.util
   (:require
-    [taoensso.timbre :refer [warn]])
-    ; [clj-time.core :as t]
-    ; [mount.core :refer [defstate]]
-    ; [monger.json]
-    ; [monger.joda-time]
-    ; [monger.core :as mg]
-    ; [monger.collection :as mc]
-    ; [monger.query :as query]
-    ; [mlib.conf :refer [conf]])
+    [mlib.log :refer [warn]]
   (:import
     [org.bson.types ObjectId]))
-    ; [com.mongodb MongoOptions ServerAddress WriteConcern]
-    ; [org.joda.time DateTimeZone]))
 ;
 
 (defn id_id [r]

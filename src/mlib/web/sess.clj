@@ -12,12 +12,18 @@
 (def SESS_PATH   "/")
 
 
-(defn sid-resp [resp sid & [tmp]]
+(defn sid-resp [resp sid domain tmp]
   (let [data {:value sid
               :path SESS_PATH
-              :http-only true}   ;; domain ?
-        data (if tmp data (assoc data :max-age SESS_MAXAGE))]
-    (update-in resp [:cookies] #(assoc % SESS_COOKIE data))))
+              :http-only true}
+        data (if tmp
+                data
+                (assoc data :max-age SESS_MAXAGE))
+        data (if domain
+                (assoc data :domain domain)
+                data)]
+    (update-in resp [:cookies]
+      #(assoc % SESS_COOKIE data))))
 ;
 
 (defn wrap-sess [handler sess-load]

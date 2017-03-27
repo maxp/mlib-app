@@ -1,9 +1,9 @@
 
-(ns mlib.psql
+(ns mlib.psql.core
   (:require
-    [taoensso.timbre :refer [info warn]]
     [clojure.java.jdbc :as jdbc]
     [mount.core :refer [defstate]]
+    [mlib.log :refer [warn]]
     [mlib.conf :refer [conf]])
   (:import
     com.mchange.v2.c3p0.ComboPooledDataSource))
