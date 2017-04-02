@@ -1,10 +1,10 @@
 
 (ns mlib.mdb.conn
   (:require
-    [mount.core :refer [defstate]]
     [monger.json]
     [monger.joda-time]
     [monger.core :as mg]
+    ; [mount.core :refer [defstate]]
     [mlib.conf :refer [conf]])
   (:import
     [org.joda.time DateTimeZone]
@@ -26,15 +26,15 @@
   (mg/disconnect (:conn mdb)))
 ;
 
-(defstate mdb
-  :start
-    (connect (-> conf :mdb))
-  :stop
-    (disconnect mdb))
+;(defstate mdb
+;  :start
+;    (connect (-> conf :mdb))
+;  :stop
+;    (disconnect mdb))
 ;
 
-(defn dbc []
-  (:db mdb))
+;(defn dbc []
+;  (:db mdb))
 ;
 
 ;;.
