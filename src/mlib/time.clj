@@ -3,6 +3,7 @@
   (:require
     [clj-time.core :as t]
     [clj-time.format :as tf]))
+;    [clj-time.local :as lt]))
 ;
 
 (defn now-ms [] (System/currentTimeMillis))
@@ -28,6 +29,8 @@
 
 (defn parse-yyyymmdd [s]
   (try (tf/parse tf-yyyymmdd (str s)) (catch Exception ignore)))
+(defn parse-ddmmyyyy [s]
+  (try (tf/parse tf-ddmmyyyy (str s)) (catch Exception ignore)))
 (defn parse-ddmmyy [s]
   (try (tf/parse tf-ddmmyy (str s)) (catch Exception ignore)))
 
