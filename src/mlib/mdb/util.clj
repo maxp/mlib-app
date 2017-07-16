@@ -1,7 +1,7 @@
 
 (ns mlib.mdb.util
-  (:require
-    [mlib.log :refer [warn]]
+  ; (:require
+  ;   [mlib.log :refer [warn]]
   (:import
     [org.bson.types ObjectId]))
 ;

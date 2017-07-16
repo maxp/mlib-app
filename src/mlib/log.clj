@@ -1,6 +1,4 @@
 
-;; TODO: update library source
-
 (ns mlib.log
   (:require
     [clojure.tools.logging]))
@@ -21,18 +19,15 @@
 ;
 
 (defmacro info [message & args]
-  `(clojure.tools.logging/logp :info
-      ~message ~@args))
+  `(clojure.tools.logging/logp :info ~message ~@args))
 ;
 
 (defmacro warn [message & args]
-  `(clojure.tools.logging/logp :warn
-      ~message ~@args))
+  `(clojure.tools.logging/logp :warn ~message ~@args))
 ;
 
 (defmacro error [message & args]
-  `(clojure.tools.logging/logp :error
-      ~message ~@args))
+  `(clojure.tools.logging/logp :error ~message ~@args))
 ;
 
 (comment
@@ -45,7 +40,15 @@
 ;;;;;; try macro ;;;;;;
 
 (defmacro try-warn [label & body]
-  `(try ~@body
-    (catch Exception e#
-      (warn ~label e#))))
+  ; (if (vector? label)
+  ;   `(try ~@body
+  ;     (catch Exception e#
+  ;       (apply
+  ;         clojure.tools.logging/logp
+  ;         (conj (cons :warn ~label) (.getMessage e#)))))
+    `(try ~@body
+      (catch Exception e#
+        (warn ~label (.getMessage e#)))))
 ;
+
+;;.

@@ -2,7 +2,7 @@
 ;;  _PRJ_
 ;;
 
-(def project {:name "_PRJ_" :version "0.0.23"})
+(def project {:name "_PRJ_" :version "0.0.0"})
 
 (def jar-main '_PRJ_.main)
 (def jar-file "_PRJ_.jar")
