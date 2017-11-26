@@ -32,9 +32,14 @@
 
 (defstate ds
   :start
-    (make-datasource (:psql conf))
+    (if-let [cfg (:psql conf)]
+      (make-datasource cfg)
+      (do
+        (warn "psql ds disabled")
+        false))
   :stop
-    (.close ds))
+    (when ds
+      (.close ds)))
 ;
 
 (defn dbc []

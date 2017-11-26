@@ -6,7 +6,7 @@
 ;
 
 
-(def socket-timeout 5000)
+(def socket-timeout 10000)
 
 (defn api-url [token method]
   (str "https://api.telegram.org/bot" token "/" (name method)))
@@ -25,13 +25,14 @@
                   { :content-type :json
                     :as :json
                     :form-params params
+                    :throw-exceptions false
                     :socket-timeout tout
                     :conn-timeout tout}))]
       (if (:ok res)
         (:result res)
         (info "api-fail:" method res)))
     (catch Exception e
-      (warn "tg-api:" method e))))
+      (warn "tg-api:" method (.getMessage e)))))
 ;
 
 (defn send-text [token chat text & [markdown?]]
@@ -69,7 +70,7 @@
             :socket-timeout (or timeout socket-timeout)
             :conn-timeout   (or timeout socket-timeout)}))
       (catch Exception e
-        (warn "get-file:" file-id e)))
+        (warn "get-file:" file-id (.getMessage e))))
     ;
     (info "get-file - not path for file_id:" file-id)))
 ;
@@ -86,6 +87,7 @@
                       (for [[k v] mpart]
                         {:name (name k) :content v :encoding "utf-8"})
                     :as :json
+                    :throw-exceptions false
                     :socket-timeout tout
                     :conn-timeout tout}))]
           ;
@@ -93,7 +95,7 @@
         (:result res)
         (info "send-file:" method res)))
     (catch Exception e
-      (warn "send-file:" method e))))
+      (warn "send-file:" method (.getMessage e)))))
 ;
 
 

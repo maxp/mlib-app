@@ -125,7 +125,7 @@
   "Replace special characters by HTML character entities."
   [text]
   (s/escape (str text)
-    {\& "&amp;" \< "&lt;" \> "&gt;" \" "&quot;" \' "&apos;"}))
+    {\& "&amp;" \< "&lt;" \> "&gt;" \" "&#34;" \' "&#39;"}))
 ;
 
 (defn cap-first [s]
