@@ -1,5 +1,5 @@
 
-(ns mlib.tlg.core
+(ns mlib.tg.core
   (:require
     [mlib.log :refer [info warn]]
     [clj-http.client :as http]))

@@ -1,10 +1,10 @@
 
-(ns mlib.tlg.poller
+(ns mlib.tg.poller
   (:require
     [clojure.core.async :refer [>!! chan]]
     [mlib.log :refer [debug info warn]]
     [mlib.core :refer [to-int]]
-    [mlib.tlg.core :refer [api]]))
+    [mlib.tg.core :refer [api]]))
 ;
 
 

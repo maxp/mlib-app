@@ -14,9 +14,14 @@
 
 (defn new_id []
   (ObjectId.))
+;
 
 (defn oid [s]
-  (try (ObjectId. s) (catch Exception e (str s))))
+  (try 
+    (ObjectId. s) 
+    (catch Exception e 
+      (str s))))
+;
 
 ;;; ;;; ;;; ;;; ;;;
 

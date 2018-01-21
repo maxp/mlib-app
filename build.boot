@@ -1,54 +1,48 @@
-;;
-;;  _PRJ_
-;;
 
-(def project {:name "_PRJ_" :version "0.0.0"})
+(def project "_PRJ_")
+(def version "0.1")
 
-(def jar-main '_PRJ_.main)
-(def jar-file "_PRJ_.jar")
-
+(def main-class (symbol (str project ".main")))
 
 (set-env!
-  :resource-paths #{"res"}
-  :source-paths #{"src"}
-  :asset-paths #{"res"}
+  :source-paths   #{"src"}
+  :resource-paths #{"resuorces"}
+  :asset-paths    #{"resources"}
 
   ;; boot -d boot-deps ancient
   :dependencies
   '[
-    [org.clojure/clojure "1.8.0"]
+    [org.clojure/clojure "1.9.0"]
+    ; [org.clojure/core.async "0.4.474"]
     ; [org.clojure/core.cache "0.6.4"]
 
-    ; [com.taoensso/timbre "4.8.0"]   ; https://github.com/ptaoussanis/timbre
     [org.clojure/tools.logging "0.4.0"]
     [ch.qos.logback/logback-classic "1.2.3"]
 
-    [clj-time "0.13.0"]
-    [clj-http "3.6.1"]
+    [clj-time "0.14.2"]
+    [clj-http "3.7.0"]
 
     ; [javax.servlet/servlet-api "2.5"]
     ; [http-kit "2.1.19"]
-    [ring/ring-core "1.6.1"]
+    [ring/ring-core "1.6.3"]
     [ring/ring-json "0.4.0"]
     [ring/ring-headers "0.3.0"]
-    [ring/ring-jetty-adapter "1.6.1"]
+    [ring/ring-jetty-adapter "1.6.3"]
 
-    [cheshire "5.7.1"]
+    [cheshire "5.8.0"]
     [compojure "1.6.0"]
     [hiccup "1.0.5"]
-    [rum "0.10.8"]
-    
-    [mount "0.1.11"]
 
+    [mount "0.1.11"]
 
     [com.novemberain/monger "3.1.0"]
 
-    ; [org.postgresql/postgresql "9.4.1212"]
+    ; [org.postgresql/postgresql "42.2.0"]
 
     ;; https://funcool.github.io/clojure.jdbc/latest/
     ; [funcool/clojure.jdbc "0.9.0"]
-    ; [hikari-cp "1.7.5"]   ; https://github.com/tomekw/hikari-cp
-    [honeysql "0.9.0"]    ; https://github.com/jkk/honeysql
+    ; [hikari-cp "2.0.1"]   ; https://github.com/tomekw/hikari-cp
+    ; [honeysql "0.9.1"]    ; https://github.com/jkk/honeysql
 
     ;; [org.clojure/java.jdbc "0.6.1"]
     ;; [com.mchange/c3p0 "0.9.5.2"]
@@ -56,9 +50,7 @@
     ; [com.draines/postal "2.0.2"]
 
     ;; https://github.com/martinklepsch/boot-garden
-    ; [org.martinklepsch/boot-garden "1.3.2-0" :scope "test"]
-
-    ;; [enlive "1.1.5"]     ;; https://github.com/cgrand/enlive
+    ; [org.martinklepsch/boot-garden "1.3.2-1" :scope "test"]
 
     ;; repl
     [org.clojure/tools.namespace "0.2.11" :scope "test"]
@@ -80,20 +72,12 @@
   '[clojure.tools.namespace.repl :refer [set-refresh-dirs]]
   '[clojure.edn :as edn]
   '[clj-time.core :as tc]
+  '[mount.core :as mount]
   '[boot.git :refer [last-commit]])
   ; '[org.martinklepsch.boot-garden :refer [garden]]
 
 
 ;;;;;;;;;
-
-(defn increment-build []
-  (let [bf "res/build.edn"
-        num (:num (edn/read-string (slurp bf)))
-        bld { :timestamp (str (tc/now))
-              :commit (last-commit)
-              :num (inc num)}]
-    (spit bf (.toString (merge project bld)))))
-;
 
 (deftask test-env []
   (set-env! :source-paths #(conj % "test"))
@@ -101,8 +85,9 @@
 ;
 
 (deftask dev []
-  (set-env! :source-paths #(conj % "dev" "test"))
+  (set-env! :source-paths #(conj % "test"))
   (apply set-refresh-dirs (get-env :source-paths))
+  (javac)
   identity)
 ;
 
@@ -113,16 +98,45 @@
 ;     (target :dir #{"tmp/res/"})))
 ; ;
 
+;;; ;;; ;;; ;;;
+
+(defn start []
+  (require main-class)
+  (-> "tmp/conf.edn"
+    (slurp)
+    (edn/read-string)
+    (mount/start-with-args)))
+;
+
+(defn go []
+  (mount/stop)
+  (apply set-refresh-dirs (get-env :source-paths))
+  (refresh :after 'boot.user/start))
+;
+
+
+(defn build-clj []
+  (let [build-clj (str "src/" project "/build.clj")
+        bld { :name project 
+              :version version
+              :timestamp (str (tc/now))
+              :commit (last-commit)}]
+    (spit build-clj 
+      (str 
+        "(ns " project ".build)\n" 
+        "(def build " bld ")\n"))))
+;
 
 (deftask build []
-  (increment-build)
+  (build-clj)
   (comp
     (javac)
     ; (garden)
     (aot)
     (uber)
-    (jar :main jar-main :file jar-file)
+    (jar :main main-class :file (str project ".jar"))
     (target :dir #{"tmp/target"})))
 ;
 
 ;;.
+

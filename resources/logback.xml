@@ -10,9 +10,6 @@
     </encoder>
   </appender>
 
-    </encoder>
-  </appender>
-
   <logger name="org.eclipse.jetty" level="INFO" />
   <logger name="org.mongodb" level="INFO" />
   <logger name="mlib" level="DEBUG" />

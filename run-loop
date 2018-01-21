@@ -1,0 +1,11 @@
+#!/bin/bash
+
+cd /www/__PRJ__
+
+while : ; 
+do
+  ./start
+  sleep 3
+done
+
+#.
