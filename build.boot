@@ -1,19 +1,19 @@
 
-(def project "_PRJ_")
-(def version "0.1")
+(def project "myapp")
+(def version "0.18.0")
 
 (def main-class (symbol (str project ".main")))
 
 (set-env!
   :source-paths   #{"src"}
-  :resource-paths #{"resuorces"}
+  :resource-paths #{"resources"}
   :asset-paths    #{"resources"}
 
   ;; boot -d boot-deps ancient
   :dependencies
   '[
     [org.clojure/clojure "1.9.0"]
-    ; [org.clojure/core.async "0.4.474"]
+    [org.clojure/core.async "0.4.474"]
     ; [org.clojure/core.cache "0.6.4"]
 
     [org.clojure/tools.logging "0.4.0"]
@@ -37,12 +37,12 @@
 
     [com.novemberain/monger "3.1.0"]
 
-    ; [org.postgresql/postgresql "42.2.0"]
+    [org.postgresql/postgresql "42.2.1"]
 
     ;; https://funcool.github.io/clojure.jdbc/latest/
-    ; [funcool/clojure.jdbc "0.9.0"]
-    ; [hikari-cp "2.0.1"]   ; https://github.com/tomekw/hikari-cp
-    ; [honeysql "0.9.1"]    ; https://github.com/jkk/honeysql
+    [funcool/clojure.jdbc "0.9.0"]
+    [hikari-cp "2.0.1"]   ; https://github.com/tomekw/hikari-cp
+    [honeysql "0.9.1"]    ; https://github.com/jkk/honeysql
 
     ;; [org.clojure/java.jdbc "0.6.1"]
     ;; [com.mchange/c3p0 "0.9.5.2"]
@@ -58,18 +58,18 @@
 ;
 
 (task-options!
-  aot {:all true}
+  aot {:all true})
   ; garden {
   ;         :styles-var 'css.styles/main
   ;         :output-to  "public/incs/css/main.css"
   ;         :pretty-print false}
-  repl {:init-ns 'user})
+  ; repl {:init-ns 'user})
 
 ;;;;;;;;;
 
 
 (require
-  '[clojure.tools.namespace.repl :refer [set-refresh-dirs]]
+  '[clojure.tools.namespace.repl :refer [set-refresh-dirs refresh]]
   '[clojure.edn :as edn]
   '[clj-time.core :as tc]
   '[mount.core :as mount]
@@ -87,29 +87,32 @@
 (deftask dev []
   (set-env! :source-paths #(conj % "test"))
   (apply set-refresh-dirs (get-env :source-paths))
-  (javac)
-  identity)
+  (javac))
+;  identity)
 ;
 
 ; (deftask css-dev []
 ;   (comp
 ;     (watch)
 ;     (garden :pretty-print true)
-;     (target :dir #{"tmp/res/"})))
+;     (target :dir #{"tmp/resources/"})))
 ; ;
 
 ;;; ;;; ;;; ;;;
 
 (defn start []
   (require main-class)
-  (-> "tmp/conf.edn"
+  (-> "tmp/dev.edn"
     (slurp)
     (edn/read-string)
     (mount/start-with-args)))
 ;
 
+(defn stop []
+  (mount/stop))
+
 (defn go []
-  (mount/stop)
+  (stop)
   (apply set-refresh-dirs (get-env :source-paths))
   (refresh :after 'boot.user/start))
 ;
@@ -139,4 +142,3 @@
 ;
 
 ;;.
-

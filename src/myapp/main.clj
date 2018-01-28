@@ -1,12 +1,12 @@
 
-(ns app.main
+(ns myapp.main
   (:gen-class)
   (:require
     [mount.core :refer [start-with-args]]
     [mlib.conf :refer [conf]]
     [mlib.core :refer [edn-read]]
     [mlib.log :refer [info warn]]
-    [app.srv]))
+    [myapp.app.srv]))
 ;
 
 (defn -main [& args]

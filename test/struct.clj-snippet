@@ -1,12 +1,9 @@
 
-(ns skern.db.struct
+(ns myapp.db.struct
   (:require
     [jdbc.core :as jdbc]
-    [taoensso.timbre :refer [info warn]]
     [mount.core :refer [defstate]]
-    [mlib.conf :refer [conf]]
-    [skern.db.conn :refer [dbc]]
-    [skern.db.sql :refer [create-table]]))
+    [mlib.conf :refer [conf]]))
 ;
 
 ;; common fields

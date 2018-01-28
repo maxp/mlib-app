@@ -1,17 +1,18 @@
 {
   ;; base config
 
-  :http {
-    :host "127.0.0.1"
-    :port 8080
-    :join? false
-  }
+  ; :http {
+  ;        :host "127.0.0.1"
+  ;        :port 8080
+  ;        :join? false}
 
+  ; :psql {
+  ;        :jdbc "jdbc:postgresql://localhost:5432/_database_"
+  ;        :user "username"
+  ;        :password "1"}
 
-  :psql {
-    :jdbc "jdbc:postgresql://localhost:5432/_database_"
-    :user "username"
-    :password "1"
-  }
-}
+  :place-for 
+  [:base :config :values]}
+
+;
 
