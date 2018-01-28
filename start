@@ -1,9 +1,11 @@
 #!/bin/bash
 
-JAR="__PRJ__.jar"
+source ./env.sh
+
+JAR=${PROJECT_NAME}.jar
 CWD=$(dirname "${BASH_SOURCE[0]}")
 
-java -jar $JAR prod.edn >> ../logs/__PRJ__-out.log 2>&1 &
+java -jar ${JAR} prod.edn >> ${PROD_LOG} 2>&1 &
 
 PID=$!
 echo $PID > $CWD/.pid

@@ -1,15 +1,16 @@
 #!/bin/bash
 
-PROD_HOST="www@__HOST__"
-PROD_PATH="/www/__PRJ__"
+source ./env.sh
+
+PRJ=${PROJECT_NAME}
 
 PROD_ROOT=$PROD_HOST:$PROD_PATH
 
-UBERJAR="tmp/target/__PRJ__.jar"
+UBERJAR="tmp/target/${PRJ}.jar"
 
-ssh $PROD_HOST mkdir -p $PROD_PATH/var
-scp var/* $PROD_ROOT/var/
-scp run-loop start stop tmp/prod.edn $PROD_ROOT/
+# ssh $PROD_HOST mkdir -p $PROD_PATH/var
+# scp var/* $PROD_ROOT/var/
+scp env.sh run-loop start stop tmp/prod.edn $PROD_ROOT/
 
 chmod u+w $UBERJAR
 scp $UBERJAR $PROD_ROOT/
