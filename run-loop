@@ -1,6 +1,10 @@
 #!/bin/bash
 
-cd /www/__APP__
+# rc.local:
+# su app -c /app/run-loop &
+
+CWD=$(dirname "${BASH_SOURCE[0]}")
+cd ${CWD}
 
 while : ; 
 do
