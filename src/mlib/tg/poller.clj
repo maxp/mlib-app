@@ -7,15 +7,17 @@
     [mlib.tg.core :refer [api]]))
 ;
 
+(def POLL_LIMIT 100)
+(def POLL_TIMEOUT 5)  ;; seconds
+(def POLL_ERROR_SLEEP 3000)
 
 (defn update-loop [run-flag cnf msg-chan]
   (let [token (:apikey cnf)
-        poll-limit (:poll-limit cnf 100)
-        poll-timeout (:poll-timeout cnf 1)
-        api-error-sleep (:api-error-sleep cnf 3000)]
+        poll-limit (:poll-limit cnf POLL_LIMIT)
+        poll-timeout (:poll-timeout cnf POLL_TIMEOUT)
+        poll-error-sleep (:poll-error-sleep cnf POLL_ERROR_SLEEP)]
     ;
-    (reset! run-flag true)
-    (debug "update-loop started.")
+    (debug "poller loop begin.")
     ;
     (loop [last-id 0  updates nil]
       (if @run-flag
@@ -23,7 +25,7 @@
           (let [id (-> u :update_id to-int)]
             (if (< last-id id)
               (when-not (>!! msg-chan u)
-                (info "msg-chan closed! exiting loop")
+                (info "poller loop: msg-chan closed.")
                 (reset! run-flag false))
               (debug "update-dupe:" id))
             (recur id (next updates)))
@@ -31,39 +33,40 @@
           (let [upd (api token :getUpdates
                       { :offset (inc last-id)
                         :limit poll-limit
-                        :timeout poll-timeout})]
-            (when-not upd
-              (warn "api-error")
-              (Thread/sleep api-error-sleep))
-            (recur last-id upd)))
+                        :timeout poll-timeout})
+                {err :error} upd]
+            (if err
+              (do
+                (warn "api-error:" upd)
+                (Thread/sleep poll-error-sleep)
+                (recur last-id nil))
+              (recur last-id upd))))
         ;;
-        (debug "update-loop stopped.")))))
+        (debug "poller loop end.")))))
 ;
 
 
-(defn start [bot-conf & [out-chan]]
-  (let [out-chan (or out-chan (chan))
-        run-flag (atom nil)
-        bot-name (:name bot-conf)]
-    (if (-> bot-conf :apikey not-empty)
-      { :thread
-          (-> #(update-loop run-flag bot-conf out-chan) Thread. .start)
+(defn start [cnf out-chan]
+  (let [run-flag (atom true)
+        bot-name (:name cnf)]
+    (if cnf
+      { :thread   (-> #(update-loop run-flag cnf out-chan) Thread. .start)
         :run-flag run-flag
-        :chan out-chan
-        :name bot-name}
+        :chan     out-chan
+        :name     bot-name}
       ;
-      (warn "bot start disabled in config:" bot-name))))
+      (do
+        (warn "poller disabled in config:" bot-name)
+        false))))
 ;
 
 (defn stop [poller]
-  (debug "stopping poller:" (:name poller))
+  (debug "poller stop:" (:name poller))
   (reset! (:run-flag poller) false))
 ;
 
 (defn get-chan [poller]
   (:chan poller))
 ;
-
-
 
 ;;.
